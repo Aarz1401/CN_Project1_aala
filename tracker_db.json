@@ -1,0 +1,12 @@
+{
+  "example_file": {
+    "chunk_0": [
+      "localhost:8001",
+      "localhost:8002"
+    ],
+    "chunk_1": [
+      "localhost:8002",
+      "localhost:8003"
+    ]
+  }
+}
