@@ -7,6 +7,14 @@
     "chunk_1": [
       "localhost:8002",
       "localhost:8003"
+    ],
+    "chunk_2": [
+      "localhost:8003",
+      "localhost:8001"
+    ],
+    "chunk_3": [
+      "localhost:8001",
+      "localhost:8002"
     ]
   }
 }

@@ -6,10 +6,21 @@ FILE_ID = CONFIG["file_id"]
 PEERS = CONFIG["peers"]
 
 # Code used for Alice to split file into chunks and distribute them
-def chunk_file(filename, chunk_size=50):
+def chunk_file(filename, num_chunks=4):
     with open(filename, 'rb') as f:
         data = f.read()
-    return [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)]
+    
+    chunk_size = len(data) // num_chunks
+    chunks = []
+
+    for i in range(num_chunks):
+        start = i * chunk_size
+        # Last chunk takes the remainder
+        end = (i + 1) * chunk_size if i < num_chunks - 1 else len(data)
+        chunks.append(data[start:end])
+
+    return chunks
+
 
 def distribute_chunks(chunks):
     peer_names = list(PEERS.keys())

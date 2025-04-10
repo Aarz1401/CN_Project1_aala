@@ -8,18 +8,27 @@ TRACKER_URL = f"http://localhost:{CONFIG['tracker_port']}"
 
 def get_chunk_locations():
     response = requests.get(f"{TRACKER_URL}/get_peers?file_id={FILE_ID}")
+    print("Raw response text:", response.text)  # 🔍 Add this line
     return response.json()
+
 
 def download_chunk(peer, chunk, out_dir):
     os.makedirs(out_dir, exist_ok=True)
     url = f"http://{peer}/chunks/{chunk}"
-    r = requests.get(url)
-    if r.status_code == 200:
-        with open(f"{out_dir}/{chunk}", 'wb') as f:
-            f.write(r.content)
-        print(f"Downloaded {chunk} from {peer}")
-        return True
+    print(f" Trying to download {chunk} from {url}")
+    try:
+        r = requests.get(url)
+        if r.status_code == 200:
+            with open(os.path.join(out_dir, chunk), 'wb') as f:
+                f.write(r.content)
+            print(f"✅ Downloaded {chunk} from {peer}")
+            return True
+        else:
+            print(f" Failed to download {chunk} from {peer} — HTTP {r.status_code}")
+    except Exception as e:
+        print(f" Exception while downloading {chunk} from {peer}: {e}")
     return False
+
 
 def download_all_chunks(chunk_locations, out_dir="chunks"):
     for chunk, peers in chunk_locations.items():
