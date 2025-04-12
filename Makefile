@@ -66,6 +66,6 @@ clean:
 	@pkill -f bob.py || true
 
 	@echo "Cleaning up files and directories..."
-	@rm -rf chunks bob_received_chunks bob_received_file.txt
+	@rm -rf chunks bob_received_chunks 
 	@rm -rf peer_8001_chunks peer_8002_chunks peer_8003_chunks peer_8004_chunks
 	@echo "Clean up complete!"

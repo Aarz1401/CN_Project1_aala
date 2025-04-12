@@ -156,22 +156,22 @@ def main():
     """Main function to orchestrate the file retrieval process"""
     print("Starting Bob's file retrieval process...")
     
-    # For this example, we're retrieving "testfile.txt" that Alice shared
+    # Retrieve "testfile.txt" that Alice shared
     filename = "testfile.txt"
     
-    # Step 1: Get chunk-to-peer mapping from tracker
+    # Get chunk-to-peer mapping from tracker
     chunk_mapping = get_peer_info_from_tracker(filename)
     if not chunk_mapping:
         print("Failed to get chunk information from tracker. Exiting.")
         return
     
-    # Step 2: Download all chunks from peers
+    # Download all chunks from peers
     successful_chunks = download_chunks(chunk_mapping)
     if not successful_chunks:
         print("Failed to download any chunks. Exiting.")
         return
     
-    # Step 3: Reconstruct the original file
+    # Reconstruct the original file
     reconstruct_file(successful_chunks)
     
     print("\nFile retrieval and reconstruction complete!")

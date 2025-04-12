@@ -65,9 +65,9 @@ def register_with_tracker(filename, chunk_mapping):
         s.sendall(message.encode())
         print(f"Registered {filename} with tracker")
 
-# Usage
+# Main run function
 if __name__ == "__main__":
-    file_path = "testfile.txt"  # Specify your file path
+    file_path = "testfile.txt"  #testfile 
     
     # Chunk the file and save it in the "chunks" folder
     chunks = chunk_file(file_path)
