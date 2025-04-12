@@ -1,14 +1,15 @@
 import socket
 import os
 
-# Configuration (adjust port for each peer)
+# Peer server 2
+# Configuration 
 HOST = "localhost"
-PORT = 8002  # Change this for each peer server (8001, 8002, 8003, 8004)
+PORT = 8002  
 
-# Define the directory for storing received chunks
+# Directory for storing received chunks
 CHUNK_DIR = f"peer_{PORT}_chunks"
 
-# Create the directory if it doesn't exist
+# Create the directory 
 os.makedirs(CHUNK_DIR, exist_ok=True)
 
 # Set up the socket
@@ -23,13 +24,13 @@ while True:
     conn, addr = s.accept()
     data = conn.recv(2048)
     
-    # Check if this is a GET request from Bob
+    # To check if this is a GET request from Bob
     if data.startswith(b'GET:'):
         # Bob is requesting a chunk
         _, chunk_id = data.decode().split(':', 1)
         print(f"Received request for chunk: {chunk_id}")
         
-        # Check if we have the requested chunk
+        # to check if we have the requested chunk
         chunk_path = os.path.join(CHUNK_DIR, chunk_id)
         if os.path.exists(chunk_path):
             # Read and send the chunk
