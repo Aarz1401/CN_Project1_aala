@@ -56,7 +56,16 @@ run-bob:
 	@python3 bob.py
 
 clean:
-	@echo "Cleaning up..."
+	@echo "Stopping all server processes..."
+	@pkill -f tracker_server.py || true
+	@pkill -f peer_server1.py || true
+	@pkill -f peer_server2.py || true
+	@pkill -f peer_server3.py || true
+	@pkill -f peer_server4.py || true
+	@pkill -f alice.py || true
+	@pkill -f bob.py || true
+
+	@echo "Cleaning up files and directories..."
 	@rm -rf chunks bob_received_chunks bob_received_file.txt
 	@rm -rf peer_8001_chunks peer_8002_chunks peer_8003_chunks peer_8004_chunks
 	@echo "Clean up complete!"
