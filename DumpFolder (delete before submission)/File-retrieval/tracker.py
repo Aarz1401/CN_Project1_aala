@@ -1,26 +1,16 @@
-import os
-import requests
+from flask import Flask, request, jsonify
+import json
 
-def download_chunk(peer_address, chunk_name, output_dir):
-    url = f"http://{peer_address}/chunks/{chunk_name}"  # Assuming peer exposes chunks at this path
-    response = requests.get(url)
-    if response.status_code == 200:
-        with open(os.path.join(output_dir, chunk_name), 'wb') as f:
-            f.write(response.content)
-        print(f"Downloaded {chunk_name} from {peer_address}")
-        return True
-    return False
+app = Flask(__name__)
 
-def download_all_chunks(chunk_locations, output_dir="chunks"):
-    os.makedirs(output_dir, exist_ok=True)
-    for chunk_name, peers in chunk_locations.items():
-        success = False
-        for peer in peers:
-            try:
-                if download_chunk(peer, chunk_name, output_dir):
-                    success = True
-                    break
-            except Exception as e:
-                print(f"Failed to download {chunk_name} from {peer}: {e}")
-        if not success:
-            raise Exception(f"Could not retrieve {chunk_name} from any peer.")
+with open("tracker_db.json") as f:
+    TRACKER_DATA = json.load(f)
+
+@app.route("/get_peers", methods=["GET"])
+def get_peers():
+    file_id = request.args.get("file_id")
+    return jsonify(TRACKER_DATA.get(file_id, {}))
+
+if __name__ == "__main__":
+    config = json.load(open("tracker_config.json"))
+    app.run(port=config["tracker_port"])

@@ -8,7 +8,7 @@ TRACKER_URL = f"http://localhost:{CONFIG['tracker_port']}"
 
 def get_chunk_locations():
     response = requests.get(f"{TRACKER_URL}/get_peers?file_id={FILE_ID}")
-    print("Raw response text:", response.text)  # 🔍 Add this line
+    print("Raw response text:", response.text)  #  Add this line
     return response.json()
 
 
